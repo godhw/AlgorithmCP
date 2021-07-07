@@ -18,17 +18,17 @@ int Answer;
 //find ((N+1)!(M+1)!)^(MOD-2)%MOD
 //use distributive law and fermat's little theorem.
 //x^p %m => if(p%2), ((x%m)*(x^2%m)^(p/2))%m
-//rem = (rem*x)%m == solution
-long long what(long long x) {
-    long long rem = 1;
+//result = (result*x)%m == solution
+long long Exp_mod_via_repeated_squaring(long long x) {
+    long long result = 1;
     long long pow = MOD - 2;
 
     while (pow > 0) {
-        if (pow % 2) rem = ((rem * x) % MOD);
+        if (pow % 2) result = ((result * x) % MOD);
         x = ((x * x) % MOD);
         pow = pow / 2;
     }
-    return rem;
+    return result;
 }
 
 int main(void) {
@@ -51,7 +51,7 @@ int main(void) {
     for (test_case = 0; test_case < T; test_case++) {
         scanf("%d %d", &N, &M);
 
-        Answer = what((fac[N+1] * fac[M+1])%MOD);
+        Answer = Exp_mod_via_repeated_squaring((fac[N+1] * fac[M+1])%MOD);
         Answer = (Answer*fac[N+M+2])%MOD;
         //this is just -1, so we have not did %MOD.
         Answer = Answer-1;
